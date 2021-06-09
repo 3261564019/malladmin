@@ -19,22 +19,29 @@
 
 <script>
 import {adminlogin} from "@/net/util"
+import { Toast } from 'vant';
 export default {
 name: "login",
   created (){
-    this.w=document.documentElement.clientWidth || document.body.clientWidth;
-    console.log(this.w);
   },
   data (){
       return{
           username:"",
-        password:""
+          password:""
         }
     },
   methods:{
     loginClick (){
+
+      // Toast.success('成功文案');
       // this.$router.push('/admin')
-      adminlogin(this.username,this.password);
+      adminlogin(this.username,this.password).then((resp)=>{
+        if(resp.data.msg==="账号密码正确"){
+          this.$router.push('/admin');
+        }else{
+          Toast("账号密码错误");
+        }
+      });
     }
   }
 }

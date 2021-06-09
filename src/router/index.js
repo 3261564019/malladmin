@@ -11,8 +11,8 @@ const routes = [
     component: login
   },
   {
-    path:"/second",
-    component: second
+    path:"/admin",
+    component: index
   }
 ]
 

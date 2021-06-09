@@ -17,7 +17,7 @@
 
 <!--    功能列表-->
     <ul class="list">
-      <li ref="li" v-for="(item,index) in items" @click="path=item.url"
+      <li ref="li" v-for="(item,index) in items" @click="liclick(item.url)"
           @mouseout="outli(index)" @mousemove="moveli(index,item.sontitle.length)" :key="index">
         <img :src="item.icon" alt="">
         {{item.titele}}
@@ -34,8 +34,10 @@
 
 <!--  右侧具体功能模块-->
   <div class="right">
-    <component :is="path">
-    </component>
+    <keep-alive>
+      <component :is="path">
+      </component>
+    </keep-alive>
   </div>
 </div>
 </template>
@@ -48,6 +50,7 @@ import orderList from "@/views/adminPage/functionalunit/orderList";
 import logisticsManagement from "@/views/adminPage/functionalunit/logisticsManagement";
 import update_goods from "@/views/adminPage/goods/update_goods";
 import insert_goods from "@/views/adminPage/goods/insert_goods";
+import goods_list from "@/views/adminPage/goods/goods_list";
 export default {
 name: "index",
   data(){
@@ -73,7 +76,7 @@ name: "index",
         },{
           titele:"物流业务",
           icon:require("../../assets/img/admin/logistic.png"),
-          url:"",
+          url:"logisticsManagement",
           sontitle: []
         },{
           titele:"商品管理",
@@ -86,6 +89,9 @@ name: "index",
             }, {
               title:"更新商品",
               url:"update_goods"
+            },{
+              title:"商品列表",
+              url:"goods_list"
             }
           ]
         }
@@ -93,6 +99,10 @@ name: "index",
     }
   },
   methods:{
+  liclick(url){
+    if(url){this.path=url}
+    console.log(this.path);
+  },
     moveli(index,size){
       let list =document.querySelectorAll(".list>li");
       //将向右的箭头旋转到向下
@@ -118,7 +128,8 @@ name: "index",
     orderList,
     logisticsManagement,
     update_goods,
-    insert_goods
+    insert_goods,
+    goods_list
   }
 }
 </script>
@@ -155,11 +166,12 @@ name: "index",
 .top>img:first-child{
   width: 40px;
   vertical-align: bottom;
+  border-radius: 22px;
+  border: 2px solid white;
 }
 .right{
   width: 80%;
   height: 100vh;
-  background-color: pink;
   float: right;
 }
 .left>ul>li{
@@ -168,6 +180,7 @@ name: "index",
   line-height: 40px;
   overflow: hidden;
   font-size: 13px;
+  padding-left: 20px;
   position: relative;
 }
 
